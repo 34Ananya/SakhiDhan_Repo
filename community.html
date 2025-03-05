@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SakhiDhan Community</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #d8e3ff;
+            margin-top: 156px;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        select, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+        .chat-container {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .chat-box {
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: auto;
+            background: #fff;
+            border-radius: 5px;
+        }
+        .message {
+            margin: 5px;
+            padding: 8px;
+            border-radius: 5px;
+        }
+        .user {
+            background: lightblue;
+            text-align: right;
+        }
+        .other {
+            background: lightgray;
+            text-align: left;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+        }
+        .floating-dock {
+    position: fixed;
+    left: 50%;
+    top: 2%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: row;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    z-index: 999;
+}
+
+/* Dock buttons */
+.dock-item {
+    background: transparent;
+    border: none;
+    padding: 12px;
+    margin: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.dock-item img {
+    width: 32px;
+    height: 32px;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease, transform 0.2s ease-in-out;
+}
+
+/* Hover effect */
+.dock-item:hover {
+    transform: scale(1.2);
+}
+
+.dock-item:hover img {
+    filter: grayscale(0%);
+}
+
+.dock-text{
+    margin-top: -5px;
+}
+    </style>
+</head>
+<body>
+    <div class="floating-dock" style="text-align: center;">
+        <button class="dock-item" onclick="navigateTo('working.html')">
+            <img src="how_it_works.webp" class="dock-icon" alt="How it Works">
+            <span class="dock-text">How it Works</span>
+        </button>
+        <button class="dock-item" onclick="navigateTo('#')">
+            <img src="save.jpg" class="dock-icon" alt="Save">
+            <span class="dock-text">Save</span>
+        </button>
+        <button class="dock-item" onclick="navigateTo('#')">
+            <img src="loan.jpg" class="dock-icon" alt="Loan">
+            <span class="dock-text">Loan</span>
+        </button>
+        <button class="dock-item" onclick="navigateTo('#')">
+            <img src="repay.png" class="dock-icon" alt="Repay">
+            <span class="dock-text">Repay</span>
+        </button>
+        <button class="dock-item" onclick="navigateTo('community.html')">
+            <img src="community.jpeg" class="dock-icon" alt="Community">
+            <span class="dock-text">Community</span>
+        </button>
+        <button class="dock-item" onclick="navigateTo('support.html')">
+            <img src="support.jpg" class="dock-icon" alt="Support">
+            <span class="dock-text">Support</span>
+        </button>
+    </div>
+    <h1 style="color: #1D2D6C;font-size: 3em;">COMMUNITY</h1>
+    <div class="container">
+        <h2 style="color: #1D2D6C;">Select Your SHG Group</h2>
+        <select id="shg-select">
+            <option value="">-- Select SHG Group --</option>
+            <option value="shg1">SHG Group 1</option>
+            <option value="shg2">SHG Group 2</option>
+            <option value="shg3">SHG Group 3</option>
+        </select>
+        <button onclick="openChat()">Join Chat</button>
+
+        <div class="chat-container" id="chat-container">
+            <h3>Community Chat - <span id="group-name"></span></h3>
+            <div class="chat-box" id="chat-box">
+                <!-- Messages will appear here -->
+            </div>
+            <input type="text" id="message" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function openChat() {
+            let select = document.getElementById("shg-select");
+            let groupName = select.options[select.selectedIndex].text;
+            if (!select.value) {
+                alert("Please select an SHG group!");
+                return;
+            }
+            document.getElementById("group-name").innerText = groupName;
+            document.getElementById("chat-container").style.display = "block";
+        }
+
+        function sendMessage() {
+            let input = document.getElementById("message");
+            let chatBox = document.getElementById("chat-box");
+
+            if (input.value.trim() === "") return;
+
+            let messageDiv = document.createElement("div");
+            messageDiv.classList.add("message", "user");
+            messageDiv.innerText = input.value;
+
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            input.value = "";
+        }
+    </script>
+
+</body>
+</html>

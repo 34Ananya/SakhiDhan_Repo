@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SakhiDhan</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="floating-dock" style="text-align: center;">
+    <button class="dock-item" onclick="navigateTo('working.html')">
+      <img src="how_it_works.webp" class="dock-icon" alt="How it Works">
+      <span class="dock-text">How it Works</span>
+    </button>
+    <button class="dock-item" onclick="navigateTo('#')">
+      <img src="save.jpg" class="dock-icon" alt="Save">
+      <span class="dock-text">Save</span>
+    </button>
+    <button class="dock-item" onclick="navigateTo('#')">
+      <img src="loan.jpg" class="dock-icon" alt="Loan">
+      <span class="dock-text">Loan</span>
+    </button>
+    <button class="dock-item" onclick="navigateTo('#')">
+      <img src="repay.png" class="dock-icon" alt="Repay">
+      <span class="dock-text">Repay</span>
+    </button>
+    <button class="dock-item" onclick="navigateTo('community.html')">
+      <img src="community.jpeg" class="dock-icon" alt="Community">
+      <span class="dock-text">Community</span>
+    </button>
+    <button class="dock-item" onclick="navigateTo('support.html')">
+      <img src="support.jpg" class="dock-icon" alt="Support">
+      <span class="dock-text">Support</span>
+    </button>
+  </div>
+  <div id="content">
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="container">
+      <h1 class="title slide-left">Sakhi<span>Dhan</span></h1>
+      <p class="subtitle slide-right"><em>Empowering Women Through <br> Smart & Secure Finance</em></p>
+      <p class="description slide-right">
+        A blockchain-based microloan and savings platform for Self-Help Groups (SHGs). <br>
+        Save, borrow, and grow together with trust and transparency.
+      </p>
+      <button class="get-started-btn" onclick="navigateTo('form.html')">Get Started</button>
+    </div>
+
+    <div class="features-container">
+      <div class="features">
+        <div class="canvas">
+          <div class="trackers"></div>
+          <div id="card">
+            <p id="prompt">LOANS</p>
+            <div class="title_card">The system provides accessible and transparent financing options. Users can apply
+              for loans with flexible repayment plans tailored to their needs.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="features">
+        <div class="canvas">
+          <div class="trackers"></div>
+          <div id="card">
+            <p id="prompt">SAVINGS</p>
+            <div class="title_card">The feature enables users to securely store and grow their funds. It encourages
+              financial stability through smart, blockchain-backed savings plans.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="features">
+        <div class="canvas">
+          <div class="trackers"></div>
+          <div id="card">
+            <p id="prompt">REPAYMENTS</p>
+            <div class="title_card">Borrowers benefit from automated schedules, rewards for timely payments, and
+              penalties for delays, ensuring financial discipline.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function navigateTo(page) {
+        fetch(page) // Fetch the requested page
+          .then(response => {
+            if (!response.ok) {
+              throw new Error("Page not found");
+            }
+            return response.text();
+          })
+          .then(html => {
+            document.getElementById("content").innerHTML = html; // Update content
+            window.history.pushState({}, "", page); // Change URL without reloading
+          })
+          .catch(error => console.error("Error loading page:", error));
+      }
+
+      // Handle browser back/forward navigation
+      window.addEventListener("popstate", () => {
+        const path = window.location.pathname;
+        if (path !== "/") {
+          navigateTo(path.substring(1));
+        }
+      });
+    </script>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>

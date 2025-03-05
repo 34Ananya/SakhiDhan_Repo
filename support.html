@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e6f2ff;
+            margin-top: -150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            flex-direction: column;
+        }
+        h2 {
+            color: #004080;
+        }
+        select {
+            width: 50%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #004080;
+        }
+        .member-list {
+            background: #f2f2f2;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: none;
+            width: 50%;
+        }
+        .support-email {
+            font-weight: bold;
+            color: #004080;
+            margin-top: 15px;
+        }
+        .floating-dock {
+    position: fixed;
+    left: 50%;
+    top: 2%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: row;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    z-index: 999;
+}
+
+/* Dock buttons */
+.dock-item {
+    background: transparent;
+    border: none;
+    padding: 12px;
+    margin: 5px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.dock-item img {
+    width: 32px;
+    height: 32px;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease, transform 0.2s ease-in-out;
+}
+
+/* Hover effect */
+.dock-item:hover {
+    transform: scale(1.2);
+}
+
+.dock-item:hover img {
+    filter: grayscale(0%);
+}
+
+.dock-text{
+    margin-top: -5px;
+}
+    </style>
+</head>
+<body>
+    <div class="floating-dock" style="text-align: center;">
+        <button class="dock-item" onclick="navigateTo('working.html')">
+            <img src="how_it_works.webp" class="dock-icon" alt="How it Works">
+            <span class="dock-text">How it Works</span>
+        </button>
+        <button class="dock-item" onclick="navigateTo('#')">
+            <img src="save.jpg" class="dock-icon" alt="Save">
+            <span class="dock-text">Save</span>
+        </button>
+        <button class="dock-item" onclick="navigateTo('#')">
+            <img src="loan.jpg" class="dock-icon" alt="Loan">
+            <span class="dock-text">Loan</span>
+        </button>
+        <button class="dock-item" onclick="navigateTo('#')">
+            <img src="repay.png" class="dock-icon" alt="Repay">
+            <span class="dock-text">Repay</span>
+        </button>
+        <button class="dock-item" onclick="navigateTo('community.html')">
+            <img src="community.jpeg" class="dock-icon" alt="Community">
+            <span class="dock-text">Community</span>
+        </button>
+        <button class="dock-item" onclick="navigateTo('support.html')">
+            <img src="support.jpg" class="dock-icon" alt="Support">
+            <span class="dock-text">Support</span>
+        </button>
+    </div>
+    <h1 style="font-size: 3em; color: #1D2D6C;">SUPPORT</h1>
+    <label for="shg">Select Your SHG:</label>
+    <select id="shg" onchange="showMembers()">
+        <option value="">-- Select SHG --</option>
+        <option value="shg1">SHG 1</option>
+        <option value="shg2">SHG 2</option>
+        <option value="shg3">SHG 3</option>
+    </select>
+    <div id="members" class="member-list">
+        <p><strong>Members:</strong></p>
+        <p id="memberInfo"></p>
+    </div>
+    <p class="support-email">For Technical Support: tech.support.mail@</p>
+    <script>
+        const membersData = {
+            shg1: "Name: John Doe | Contact: 123-456-7890<br>Name: Jane Smith | Contact: 987-654-3210",
+            shg2: "Name: Meera Rao | Contact: 9898989898<br>Name: Ravi Kumar | Contact: 9786543210",
+            shg3: "Name: Priya Verma | Contact: 9123456789<br>Name: Aarti Sharma | Contact: 9876543210"
+        };
+        
+        function showMembers() {
+            const shg = document.getElementById("shg").value;
+            const memberInfo = document.getElementById("memberInfo");
+            const memberList = document.getElementById("members");
+            
+            if (shg && membersData[shg]) {
+                memberInfo.innerHTML = membersData[shg];
+                memberList.style.display = "block";
+            } else {
+                memberList.style.display = "none";
+            }
+        }
+        function navigateTo(page) {
+            fetch(page) // Fetch the requested page
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Page not found");
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    document.getElementById("content").innerHTML = html; // Update content
+                    window.history.pushState({}, "", page); // Change URL without reloading
+                })
+                .catch(error => console.error("Error loading page:", error));
+        }
+
+        // Handle browser back/forward navigation
+        window.addEventListener("popstate", () => {
+            const path = window.location.pathname;
+            if (path !== "/") {
+                navigateTo(path.substring(1));
+            }
+        });
+    </script>
+</body>
+</html>

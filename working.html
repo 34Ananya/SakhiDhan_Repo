@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works - Sakhidhan</title>
+    <link rel="stylesheet" href="working.css">
+</head>
+<body>
+    <div class="floating-dock" style="text-align: center;">
+        <button class="dock-item" onclick="navigateTo('working.html')">
+            <img src="how_it_works.webp" class="dock-icon" alt="How it Works">
+            <span class="dock-text">How it Works</span>
+        </button>
+        <button class="dock-item" onclick="navigateTo('#')">
+            <img src="save.jpg" class="dock-icon" alt="Save">
+            <span class="dock-text">Save</span>
+        </button>
+        <button class="dock-item" onclick="navigateTo('#')">
+            <img src="loan.jpg" class="dock-icon" alt="Loan">
+            <span class="dock-text">Loan</span>
+        </button>
+        <button class="dock-item" onclick="navigateTo('#')">
+            <img src="repay.png" class="dock-icon" alt="Repay">
+            <span class="dock-text">Repay</span>
+        </button>
+        <button class="dock-item" onclick="navigateTo('community.html')">
+            <img src="community.jpeg" class="dock-icon" alt="Community">
+            <span class="dock-text">Community</span>
+        </button>
+        <button class="dock-item" onclick="navigateTo('support.html')">
+            <img src="support.jpg" class="dock-icon" alt="Support">
+            <span class="dock-text">Support</span>
+        </button>
+    </div>
+    <header>
+        <h1>HOW IT WORKS</h1>
+        <p style="color: rgb(144, 143, 143);">Understand how Sakhidhan helps you save, borrow, and grow financially.</p>
+    </header>
+
+    <section class="steps-container">
+        <div class="step" id="step1">
+            <div class="step-number">1</div>
+            <h2>Register on the Platform</h2>
+            <p>Sign up with your wallet to start your financial journey.</p>
+        </div>
+
+        <div class="step" id="step2">
+            <div class="step-number">2</div>
+            <h2>Start Saving Regularly</h2>
+            <p>Deposit small amounts regularly to build your creditworthiness.</p>
+        </div>
+
+        <div class="step" id="step3">
+            <div class="step-number">3</div>
+            <h2>Apply for a Loan</h2>
+            <p>Request a loan based on your savings and credit score.</p>
+        </div>
+
+        <div class="step" id="step4">
+            <div class="step-number">4</div>
+            <h2>Credit Score Calculation</h2>
+            <p>Your score is based on saving consistency, repayments, and past loans.</p>
+            <button class="show-score-btn">How is it Calculated?</button>
+            <div class="credit-score-info">
+                <p><strong>Formula:</strong> Credit Score = (Savings × 50%) + (Repayments × 40%) + (Loan History × 10%)</p>
+            </div>
+        </div>
+
+        <div class="step" id="step5">
+            <div class="step-number">5</div>
+            <h2>Loan Disbursement</h2>
+            <p>If approved, funds are transferred to your wallet automatically.</p>
+        </div>
+
+        <div class="step" id="step6">
+            <div class="step-number">6</div>
+            <h2>Repay Your Loan</h2>
+            <p>Make timely payments to maintain a high credit score.</p>
+        </div>
+
+        <div class="step" id="step7">
+            <div class="step-number">7</div>
+            <h2>Grow Your Financial Strength</h2>
+            <p>Responsible users enjoy better loan limits and lower interest rates.</p>
+        </div>
+    </section>
+    <script src="working.js"></script>
+</body>
+</html>

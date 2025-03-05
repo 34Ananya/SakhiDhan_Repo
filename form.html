@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakhidhan - Sign In / Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #d8e3ff;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            width: 400px;
+            box-shadow: 0 4px 8px #1D2D6C;
+            border-radius: 8px;
+            text-align: center;
+        }
+        h2 { margin-bottom: 15px; }
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #1D2D6C;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        button:hover { background: #3d55b8; }
+        .switch { 
+            margin-top: 10px; 
+            color: #1D2D6C; 
+            cursor: pointer; 
+        }
+        .switch:hover { text-decoration: underline; }
+        .hidden { display: none; }
+        #walletAddress {
+            font-size: 14px;
+            margin-top: 10px;
+            word-break: break-word;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2 id="formTitle">Sign In</h2>
+    
+    <form id="authForm">
+        <input type="text" id="name" placeholder="Full Name" required>
+        
+        <div id="extraFields">
+            <input type="tel" id="contact" placeholder="Contact No." required>
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="text" id="aadhar" placeholder="Aadhaar Card No." required>
+            <input type="text" id="pan" placeholder="PAN Card No." required>
+            <input type="text" id="bank" placeholder="Bank Account No." required>
+            <input type="text" id="address" placeholder="Residence Address" required>
+            
+            <!-- MetaMask Connection for Sign In -->
+            <button type="button" onclick="connectMetaMask()">Connect MetaMask</button>
+            <p id="walletAddress"></p>
+        </div>
+
+        <!-- Wallet Address Field for Sign Up -->
+        <div id="walletInput" class="hidden">
+            <input type="text" id="manualWalletAddress" placeholder="Enter Wallet Address" required>
+        </div>
+
+        <button type="submit">Sign In</button>
+    </form>
+
+    <p class="switch" onclick="toggleForm()">Don't have an account? Sign Up</p>
+</div>
+
+<script>
+    let isSignUp = false;
+    let walletAddress = "";
+
+    function toggleForm() {
+        isSignUp = !isSignUp;
+
+        document.getElementById("formTitle").innerText = isSignUp ? "Sign Up" : "Sign In";
+        document.querySelector("button[type='submit']").innerText = isSignUp ? "Sign Up" : "Sign In";
+        document.querySelector(".switch").innerText = isSignUp ? "Already have an account? Sign In" : "Don't have an account? Sign Up";
+
+        // Show only the wallet input field for Sign Up and remove MetaMask connection
+        document.getElementById("extraFields").style.display = isSignUp ? "none" : "block";
+        document.getElementById("walletInput").style.display = isSignUp ? "block" : "none";
+    }
+
+    async function connectMetaMask() {
+        if (window.ethereum) {
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                walletAddress = accounts[0];
+                document.getElementById("walletAddress").innerText = "Connected: " + walletAddress;
+            } catch (error) {
+                alert("MetaMask connection failed!");
+            }
+        } else {
+            alert("MetaMask is not installed. Please install it to connect.");
+        }
+    }
+
+    document.getElementById("authForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        
+        if (isSignUp) {
+            let enteredWallet = document.getElementById("manualWalletAddress").value.trim();
+            if (!enteredWallet) {
+                alert("Please enter your wallet address!");
+                return;
+            }
+        } else {
+            if (!walletAddress) {
+                alert("Please connect your MetaMask wallet first!");
+                return;
+            }
+        }
+
+        alert((isSignUp ? "Sign Up" : "Sign In") + " successful!");
+    });
+</script>
+
+</body>
+</html>
