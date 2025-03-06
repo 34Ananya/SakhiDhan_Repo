@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaMask Full Integration</title>
+</head>
+<body>
+    <h2>MetaMask Wallet Integration</h2>
+    <button onclick="connectMetaMask()">Connect Wallet</button>
+    <p>Wallet Address: <span id="walletAddress">Not connected</span></p>
+    <p>Wallet Balance: <span id="walletBalance">0 ETH</span></p>
+    <button onclick="sendTransaction()">Send 0.01 ETH</button>
+
+    <script>
+        async function connectMetaMask() {
+            if (window.ethereum) {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    document.getElementById('walletAddress').innerText = accounts[0];
+                    console.log("Connected Wallet:", accounts[0]);
+
+                    // Fetch and display balance
+                    getBalance(accounts[0]);
+                } catch (error) {
+                    console.error("User denied account access", error);
+                }
+            } else {
+                alert("MetaMask not installed! Please install MetaMask.");
+            }
+        }
+        async function sendTransaction() {
+        if (window.ethereum) {
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+            try {
+                const tx = await window.ethereum.request({
+                    method: "eth_sendTransaction",
+                    params: [{
+                        from: accounts[0],
+                        to: "0xReceiverWalletAddressHere",  // Replace with actual address
+                        value: window.web3.utils.toWei("0.01", "ether")
+                    }]
+                });
+                alert("Transaction Sent! TX Hash: " + tx);
+            } catch (error) {
+                console.error("Transaction failed", error);
+            }
+        }
+    }
+
+        async function getBalance(address) {
+            if (window.ethereum) {
+                const balance = await window.ethereum.request({
+                    method: "eth_getBalance",
+                    params: [address, "latest"]
+                });
+                const balanceInEth = parseFloat(window.web3.utils.fromWei(balance, "ether")).toFixed(4);
+                document.getElementById('walletBalance').innerText = balanceInEth + " ETH";
+            }
+        }
+    </script>
+    <!-- Web3.js for balance conversion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/4.2.1/web3.min.js"></script>
+</body>
+</html>
